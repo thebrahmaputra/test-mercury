@@ -1,5 +1,7 @@
 package com.test.mercury.main;
 
+import com.testsetup.TestSetUp;
+import com.testutils.TestBasicUtils;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -14,12 +16,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 
-public class DataFetchOperations {
+public class DataFetchOperations extends TestSetUp {
     @Test
     public void readXLData(){
         InputStream XlsxFileToRead = null;
         XSSFWorkbook workbook = null;
         String fileName = "F:\\Imp Docs\\Loan\\Doc list.xlsx";
+        TestBasicUtils.step(1, "Inidializing workbook and worksheet");
         try {
 //            XlsxFileToRead = c;
 
@@ -38,6 +41,7 @@ public class DataFetchOperations {
         XSSFCell cell;
 
         //Iterating all the rows in the sheet
+        TestBasicUtils.step(2, "Printing workbook values");
         Iterator rows = sheet.rowIterator();
         while (rows.hasNext()) {
             row = (XSSFRow) rows.next();
@@ -66,7 +70,7 @@ public class DataFetchOperations {
             }
             System.out.println();
             try {
-                XlsxFileToRead.close();
+                workbook.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

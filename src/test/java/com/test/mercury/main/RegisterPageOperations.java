@@ -1,5 +1,6 @@
 package com.test.mercury.main;
 
+import com.testsetup.TestSetUp;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Reporter;
@@ -7,13 +8,13 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import pageobject.pages.HomePageElement;
+import com.pageobject.pages.HomePageElement;
 
 import java.lang.reflect.Method;
 
-public class RegisterPageOperations {
+public class RegisterPageOperations extends TestSetUp {
 
-    static WebDriver driver;
+    /*static WebDriver driver;
     static HomePageElement homePageElement;
     //static String url = "http://www.londonfreelance.org/courses/frames/index.html";
     static String url = "http://demo.guru99.com/selenium/newtours/index.php";
@@ -24,10 +25,10 @@ public class RegisterPageOperations {
         driver.get(url);
         homePageElement = new HomePageElement(driver);
         homePageElement.getRegisterLink().click();
-    }
+    }*/
 
     @Test
-    public void countLinks(){
+    public void test01CountLinks(){
         int linkCount = homePageElement.getLinks().size();
         Reporter.log("Total links on register page: "+linkCount);
     }
@@ -43,10 +44,10 @@ public class RegisterPageOperations {
        };
     }
 
-    @AfterClass
+    /*@AfterClass
     public static void tearDown(){
         driver.close();
         driver = null;
         homePageElement = null;
-    }
+    }*/
 }
