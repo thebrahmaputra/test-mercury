@@ -1,51 +1,36 @@
 package com.test.mercury.main;
 
+import com.testsetup.TestSetUp;
+import com.testutils.TestBasicUtils;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
-import org.testng.ITestResult;
 import org.testng.Reporter;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import pageobject.pages.HomePageElement;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-public class HomePageOperations {
-    static WebDriver driver;
-    static HomePageElement homePageElement;
-    //static String url = "http://www.londonfreelance.org/courses/frames/index.html";
-    static String url = "http://demo.guru99.com/selenium/newtours/index.php";
-    @BeforeClass(alwaysRun = true)
-    static void setUpClass(){
-        System.setProperty("webdriver.chrome.driver","E:\\Softwares\\selenium\\chromedriver.exe");
-        driver=new ChromeDriver();
-        driver.get(url);
-        homePageElement = new HomePageElement(driver);
-        Reporter.clear();
-    }
+public class HomePageOperations extends TestSetUp {
 
     @Test
-    public void clickOnSignonLink(){
+    public void test01clickOnSignonLink(){
+        TestBasicUtils.step(1, "Clicking on SIGN-ON link");
         driver.findElement(By.linkText("SIGN-ON")).click();
     }
 
     @Test
-    public void verifyMenuLinks() {
+    public void test02VerifyMenuLinks() {
         SoftAssert softAssert = new SoftAssert();
         String[] links = {"Home 1", "Flights", "Hotels", "Car Rentals", "Cruises", "Destinations", "Vacations"};
         List<String> linkList = Arrays.asList(links);
         List<WebElement> tableLinks = homePageElement.getMenuTable().findElements(By.tagName("a"));
-        Reporter.log("LinkTexts");
+        TestBasicUtils.step(1, "Print and verify links under Home Page Menu");
+        Reporter.log("LinMessageskTexts");
         for (WebElement tl : tableLinks) {
             Reporter.log(tl.getText());
             if (!linkList.contains(tl.getText())) {
@@ -55,16 +40,18 @@ public class HomePageOperations {
     }
 
     @Test (groups = {"sample1"})
-    public void menuTableLinks(){
+    public void test03MenuTableLinks(){
         SoftAssert softAssert = new SoftAssert();
+        TestBasicUtils.step(1, "Verify number of links in Menu Table of Home Page");
         int rows = homePageElement.getMenuTable().findElements(By.tagName("tr")).size();
-        softAssert.assertEquals(rows, 7, "expected 8 but actual "+rows);
+        softAssert.assertEquals(rows, 7, " Menu table rows expected 7 but actual "+rows);
         softAssert.assertAll();
     }
 
     @Test
-    public void headerLinksTable(){
+    public void test04HeaderLinksTable(){
         SoftAssert softAssert = new SoftAssert();
+        TestBasicUtils.step(1, "Verify number of rows and columns in Link header table");
         int rows = homePageElement.getHeaderLinkTable().findElements(By.tagName("tr")).size();
         softAssert.assertEquals(1, rows);
         int cols = homePageElement.getHeaderLinkTable().findElements(By.tagName("tr")).get(0).findElements(By.tagName("td")).size();
@@ -89,21 +76,14 @@ public class HomePageOperations {
     }*/
 
     @Test
-    public void takeScreenShotOfHomePage(){
+    public void test05TakeScreenShotOfHomePage(){
         homePageElement.getRegisterLink().click();
         File screenCapture = ((ChromeDriver) driver).getScreenshotAs(OutputType.FILE);
         try {
-            FileUtils.copyFile(screenCapture, new File("E:/LinkedLerrning/HomePage.jpg"), true);
+            FileUtils.copyFile(screenCapture, new File("target/surefire-reports/screens/testTakeScreenShotOfHomePage.jpg"), true);
+            Reporter.log("Screenshot saved at : <a href=\"screens/testTakeScreenShotOfHomePage.jpg\">Failure screen</a>");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    @AfterClass(alwaysRun = true)
-    public static void cleanUp(){
-        driver.close();
-        driver = null;
-        homePageElement = null;
-    }
-
 }

@@ -1,6 +1,6 @@
-package pageobject.pages;
+package com.pageobject.pages;
 
-import pageobject.PageObject;
+import com.pageobject.PageObject;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

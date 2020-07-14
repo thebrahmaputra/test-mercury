@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="TestNG Suite">
-    <test name="TestNG Intentoins Test">
+    <listeners>
+        <listener class-name="com.testutils.testreporter.TestNgCustomReporter"/>
+    </listeners>
+    <test name="TestNG Suites Test">
         <!--<groups>
             <run>
                 <include name="sample1"/>
             </run>
         </groups>-->
         <classes>
-            <class name="com.test.mercury.main.DataFetchOperations"/>
-            <!--<class name="com.test.mercury.main.RegisterPageOperations"/>-->
+            <class name="com.test.mercury.main.HomePageOperations"/>
+            <class name="com.test.mercury.main.RegisterPageOperations"/>
         </classes>
     </test>
 </suite>
