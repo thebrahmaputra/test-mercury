@@ -1,12 +1,12 @@
 package com.test.mercury.main;
 
-import com.testsetup.TestSetUp;
+import com.pageobject.pages.HomePageElement;
 import com.testutils.TestBasicUtils;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
 import org.testng.Reporter;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -15,12 +15,12 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-public class HomePageOperations extends TestSetUp {
+public class HomePageOperations extends HomePageElement {
 
-    @Test
+    @Test(priority = 4)
     public void test01clickOnSignonLink(){
         TestBasicUtils.step(1, "Clicking on SIGN-ON link");
-        driver.findElement(By.linkText("SIGN-ON")).click();
+        find(signOn).click();
     }
 
     @Test
@@ -28,7 +28,7 @@ public class HomePageOperations extends TestSetUp {
         SoftAssert softAssert = new SoftAssert();
         String[] links = {"Home 1", "Flights", "Hotels", "Car Rentals", "Cruises", "Destinations", "Vacations"};
         List<String> linkList = Arrays.asList(links);
-        List<WebElement> tableLinks = homePageElement.getMenuTable().findElements(By.tagName("a"));
+        List<WebElement> tableLinks = findList(linkTag);
         TestBasicUtils.step(1, "Print and verify links under Home Page Menu");
         Reporter.log("LinMessageskTexts");
         for (WebElement tl : tableLinks) {
@@ -43,8 +43,8 @@ public class HomePageOperations extends TestSetUp {
     public void test03MenuTableLinks(){
         SoftAssert softAssert = new SoftAssert();
         TestBasicUtils.step(1, "Verify number of links in Menu Table of Home Page");
-        int rows = homePageElement.getMenuTable().findElements(By.tagName("tr")).size();
-        softAssert.assertEquals(rows, 7, " Menu table rows expected 7 but actual "+rows);
+        List<WebElement> rows = findTableRows(find(menuTable));
+        softAssert.assertEquals(rows.size(), 7, " Menu table rows expected 7 but actual "+rows.size());
         softAssert.assertAll();
     }
 
@@ -52,10 +52,10 @@ public class HomePageOperations extends TestSetUp {
     public void test04HeaderLinksTable(){
         SoftAssert softAssert = new SoftAssert();
         TestBasicUtils.step(1, "Verify number of rows and columns in Link header table");
-        int rows = homePageElement.getHeaderLinkTable().findElements(By.tagName("tr")).size();
-        softAssert.assertEquals(1, rows);
-        int cols = homePageElement.getHeaderLinkTable().findElements(By.tagName("tr")).get(0).findElements(By.tagName("td")).size();
-        Assert.assertEquals(4, cols);
+        int rows = findTableRows(find(menuTable)).size();
+        softAssert.assertEquals(rows, 7, "Expecte number of rows 7, actual "+rows);
+        int cols = findTableColumns(findTableRows(find(menuTable)).get(1)).size();
+        softAssert.assertEquals(cols, 2, "Expected number of columns 2 actual "+cols);
         softAssert.assertAll();
     }
 
@@ -77,7 +77,7 @@ public class HomePageOperations extends TestSetUp {
 
     @Test
     public void test05TakeScreenShotOfHomePage(){
-        homePageElement.getRegisterLink().click();
+        find(registerLink).click();
         File screenCapture = ((ChromeDriver) driver).getScreenshotAs(OutputType.FILE);
         try {
             FileUtils.copyFile(screenCapture, new File("target/surefire-reports/screens/testTakeScreenShotOfHomePage.jpg"), true);

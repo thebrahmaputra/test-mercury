@@ -67,6 +67,27 @@
         <version>3.17</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/log4j/log4j -->
+    <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.17</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
+    <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-api</artifactId>
+        <version>2.13.3</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+    <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-core</artifactId>
+        <version>2.11.2</version>
+    </dependency>
+
 </dependencies>
     <build>
         <plugins>
@@ -77,31 +98,41 @@
             <configuration>
                 <suiteXmlFiles>
                     <!-- TestNG suite XML files -->
-                    <suiteXmlFile>testng.xml</suiteXmlFile>
+                    <!--<suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>-->
+                    <suiteXmlFile>src/test/resources/HerokuApp.xml</suiteXmlFile>
+                    <!--<suiteXmlFile>src/test/resources/UltimateQA.xml</suiteXmlFile>-->
                 </suiteXmlFiles>
             </configuration>
         </plugin>
-        <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.19.1</version>
-        <configuration>
-            <properties>
-                <property>
-                    <name>parallel</name>
-                    <value>methods</value>
-                </property>
-                <property>
-                    <name>threadCount</name>
-                    <value>3</value>
-                </property>
-                <property>
-                    <name>dataproviderthreadcount</name>
-                    <value>6</value>
-                </property>
-            </properties>
-        </configuration>
-        </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>7</source>
+                    <target>7</target>
+                </configuration>
+            </plugin>
+            <!--<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.19.1</version>
+            <configuration>
+                <properties>
+                    <property>
+                        <name>parallel</name>
+                        <value>methods</value>
+                    </property>
+                    <property>
+                        <name>threadCount</name>
+                        <value>3</value>
+                    </property>
+                    <property>
+                        <name>dataproviderthreadcount</name>
+                        <value>6</value>
+                    </property>
+                </properties>
+            </configuration>
+            </plugin>-->
         </plugins>
     </build>
 </project>

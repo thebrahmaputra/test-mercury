@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="TestNG Suite">
+    <parameter name="browser" value="chrome"></parameter>
+    <parameter name="url" value="https://ultimateqa.com/simple-html-elements-for-automation/"></parameter>
+    <listeners>
+        <listener class-name="com.testutils.testreporter.TestNgCustomReporter"/>
+    </listeners>
+    <test name="TestNG Suites Test">
+        <!--<groups>
+            <run>
+                <include name="sample1"/>
+            </run>
+        </groups>-->
+        <classes>
+            <class name="com.test.ultimateqa.UltimateQATest"/>
+        </classes>
+    </test>
+</suite>
