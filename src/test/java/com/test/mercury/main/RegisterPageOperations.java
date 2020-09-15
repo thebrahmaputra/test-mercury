@@ -12,7 +12,7 @@ import com.pageobject.pages.HomePageElement;
 
 import java.lang.reflect.Method;
 
-public class RegisterPageOperations extends TestSetUp {
+public class RegisterPageOperations extends HomePageElement {
 
     /*static WebDriver driver;
     static HomePageElement homePageElement;
@@ -29,7 +29,8 @@ public class RegisterPageOperations extends TestSetUp {
 
     @Test
     public void test01CountLinks(){
-        int linkCount = homePageElement.getLinks().size();
+        find(registerLink).click();
+        int linkCount = findList(linkTag).size();
         Reporter.log("Total links on register page: "+linkCount);
     }
 

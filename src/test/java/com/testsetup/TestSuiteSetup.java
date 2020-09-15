@@ -1,10 +1,12 @@
 package com.testsetup;
 
-import com.pageobject.pages.HomePageElement;
+import com.testutils.BrowserFactory;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.*;
@@ -13,27 +15,32 @@ import java.io.File;
 import java.io.IOException;
 
 public class TestSuiteSetup {
-    public static WebDriver driver;
-    public static HomePageElement homePageElement;
+    public WebDriver driver;
+//    public HomePageElement homePageElement;
     //static String url = "http://www.londonfreelance.org/courses/frames/index.html";
-    static String url = "http://demo.guru99.com/selenium/newtours/index.php";
+//    static String url;
+    protected Logger logger;
+
+    @Parameters({"browser", "url"})
     @BeforeSuite(alwaysRun = true)
-    public void setUpClass(){
-        System.setProperty("webdriver.chrome.driver","E:\\Softwares\\selenium\\chromedriver.exe");
-        driver=new ChromeDriver();
+    public void setUpClass(@Optional("chrome") String browser, @Optional("url") String url, ITestContext ctx){
+
+        String testName = ctx.getCurrentXmlTest().getName();
+        logger = Logger.getLogger(testName);
+        BrowserFactory browserFactory = new BrowserFactory(browser, logger);
+        driver=browserFactory.createDriver();
         driver.get(url);
-        homePageElement = new HomePageElement(driver);
-        Reporter.clear();
+//        homePageElement = new HomePageElement(driver);
+        logger.info("Test setup done");
     }
 
     @AfterSuite(alwaysRun = true)
     public void cleanUp(){
-//        Reporter.clear();
-        driver.close();
+        driver.quit();
         driver = null;
-        homePageElement = null;
+        logger.info("Test clean-up done");
     }
-    @AfterMethod
+    /*@AfterMethod
     public void testTearDown(ITestResult result){
         if (result.getStatus() == ITestResult.SUCCESS){
             try {
@@ -44,7 +51,8 @@ public class TestSuiteSetup {
                 e.printStackTrace();
             }
         }
-    }
+    }*/
+
 
 
 }

@@ -24,6 +24,7 @@ public class TestNgCustomReporter implements IReporter {
     private String filename = "test-customized-report.html";
     private PrintWriter printWriter;
 
+    @Override
     public void generateReport(List<XmlSuite> list, List<ISuite> suiteList, String s) {
         try {
             new File(s).mkdirs();
@@ -71,7 +72,7 @@ public class TestNgCustomReporter implements IReporter {
     }
 
     private void writeReportTitle(String ttl ){
-        printWriter.print("<center><h1>" + title + " - " + getDateAsString() + "</h1></center>");
+        printWriter.print("<center><h1>" + ttl + " - " + getDateAsString() + "</h1></center>");
     }
 
     public void generateSuiteSummaryReport(List<ISuite> suites){
@@ -119,15 +120,15 @@ public class TestNgCustomReporter implements IReporter {
                 summaryCell(q, 0);
 
                 // Write OS and Browser
-                summaryCell(suite.getParameter("browserType"), true);
-                printWriter.println("</td>");
+                summaryCell(suite.getParameter("browser"), true);
+//                printWriter.println("</td>");
 
                 SimpleDateFormat summaryFormat = new SimpleDateFormat("hh:mm:ss");
                 summaryCell(summaryFormat.format(overview.getStartDate()),true);
-                printWriter.println("</td>");
+//                printWriter.println("</td>");
 
                 summaryCell(summaryFormat.format(overview.getEndDate()),true);
-                printWriter.println("</td>");
+//                printWriter.println("</td>");
 
                 time_start = Math.min(overview.getStartDate().getTime(), time_start);
                 time_end = Math.max(overview.getEndDate().getTime(), time_end);
